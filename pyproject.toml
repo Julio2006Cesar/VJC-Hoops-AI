@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=70.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vjc-hoops-ai"
+version = "0.1.0"
+description = "Basketball performance analysis with AI and computer vision."
+readme = "README.md"
+requires-python = ">=3.11,<3.13"
+authors = [
+    { name = "VJC Hoops AI" }
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
