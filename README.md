@@ -1158,3 +1158,662 @@ Actualmente el proyecto cuenta con los siguientes módulos implementados:
 ✔ Pruebas unitarias e integración.
 
 Los siguientes módulos (detección de balón, aro, cancha, pose, estadísticas y videojuego) forman parte de la siguiente etapa del desarrollo.
+
+# 📘 PARTE 3
+# Sistema RPG y Personalización
+
+---
+
+# Filosofía
+
+VJC Hoops AI no será únicamente un sistema de visión por computadora.
+
+Será también un videojuego RPG deportivo.
+
+La inteligencia artificial analizará el rendimiento del jugador en la vida real mientras el videojuego representará toda esa información mediante un personaje Pixel Art completamente personalizable.
+
+El usuario no solo verá estadísticas.
+
+Verá una versión virtual de sí mismo.
+
+Su avatar crecerá.
+
+Aprenderá.
+
+Subirá de nivel.
+
+Desbloqueará habilidades.
+
+Obtendrá recompensas.
+
+Y evolucionará conforme mejore dentro de la cancha.
+
+El objetivo es transformar el entrenamiento de baloncesto en una experiencia divertida, motivadora y altamente adictiva.
+
+---
+
+# Objetivo del Sistema RPG
+
+El sistema RPG tiene cuatro objetivos principales:
+
+- Motivar al jugador a entrenar constantemente.
+- Representar visualmente el progreso deportivo.
+- Recompensar el esfuerzo mediante niveles y desbloqueos.
+- Crear una identidad única para cada usuario.
+
+Cada entrenamiento tendrá una recompensa.
+
+Cada mejora será visible.
+
+Cada logro tendrá un significado.
+
+---
+
+# Concepto General
+
+El usuario crea un personaje.
+
+Ese personaje representa al jugador real.
+
+Todo lo que ocurre durante un entrenamiento modifica automáticamente al avatar.
+
+Ejemplo:
+
+Jugador mejora su porcentaje de tiro
+
+↓
+
+La IA detecta la mejora
+
+↓
+
+Se actualizan las estadísticas
+
+↓
+
+El jugador gana experiencia
+
+↓
+
+Sube de nivel
+
+↓
+
+Desbloquea nuevos objetos
+
+↓
+
+El personaje evoluciona
+
+Todo este proceso será completamente automático.
+
+---
+
+# Creación del Personaje
+
+La primera vez que el usuario abra el juego aparecerá un editor de personaje.
+
+Podrá configurar:
+
+Nombre
+
+Edad
+
+Altura
+
+Peso
+
+Posición favorita
+
+- Base (Point Guard)
+- Escolta (Shooting Guard)
+- Alero (Small Forward)
+- Ala-Pívot (Power Forward)
+- Pívot (Center)
+
+También podrá personalizar completamente su apariencia.
+
+---
+
+# Personalización Física
+
+El sistema permitirá modificar:
+
+## Rostro
+
+- Forma de la cara
+- Ojos
+- Cejas
+- Nariz
+- Boca
+- Orejas
+
+## Cabello
+
+- Corto
+- Largo
+- Afro
+- Trenzas
+- Rastas
+- Rapado
+- Moicano
+- Cola de caballo
+
+Cada peinado tendrá múltiples colores.
+
+---
+
+# Vello Facial
+
+Opciones disponibles:
+
+- Sin barba
+- Barba corta
+- Barba larga
+- Bigote
+- Candado
+- Patillas
+
+---
+
+# Color de Piel
+
+Se incluirá una amplia variedad de tonos para representar correctamente a cualquier jugador.
+
+---
+
+# Color de Ojos
+
+El usuario podrá elegir entre distintos colores.
+
+---
+
+# Complexión Física
+
+El personaje podrá tener diferentes tipos de cuerpo.
+
+Ejemplo:
+
+- Delgado
+- Atlético
+- Musculoso
+- Robusto
+
+Esto únicamente afectará la apariencia.
+
+No modificará estadísticas.
+
+---
+
+# Sistema de Ropa
+
+Toda la ropa será independiente.
+
+Cada elemento podrá equiparse o cambiarse cuando el usuario quiera.
+
+Categorías:
+
+- Playeras
+- Sudaderas
+- Jerseys
+- Shorts
+- Pants
+- Calcetas
+- Tenis
+- Gorras
+- Muñequeras
+- Rodilleras
+- Coderas
+- Mochilas
+- Lentes
+- Accesorios
+
+---
+
+# Sistema Modular del Personaje
+
+Cada parte del personaje será independiente.
+
+```
+Player
+│
+├── Hair
+├── Beard
+├── Face
+├── Eyes
+├── Skin
+├── Shirt
+├── Pants
+├── Shoes
+├── Hat
+├── Accessories
+└── Backpack
+```
+
+Esta arquitectura permitirá agregar miles de objetos sin modificar el personaje base.
+
+---
+
+# Sistema de Sprites
+
+Cada personaje utilizará animaciones Pixel Art.
+
+Animaciones iniciales:
+
+- Idle
+- Walk
+- Run
+- Jump
+- Shoot
+- Pass
+- Dribble
+- Defense
+- Celebration
+- Hurt
+- Victory
+- Defeat
+
+Cada animación estará formada por múltiples frames.
+
+Ejemplo:
+
+```
+Idle
+
+Frame 1
+Frame 2
+Frame 3
+Frame 4
+```
+
+```
+Run
+
+Frame 1
+Frame 2
+Frame 3
+Frame 4
+Frame 5
+Frame 6
+```
+
+---
+
+# Direcciones
+
+Cada animación existirá en múltiples direcciones.
+
+- Frente
+- Espalda
+- Izquierda
+- Derecha
+- Diagonal Superior
+- Diagonal Inferior
+
+Esto permitirá crear mapas completos.
+
+---
+
+# Sistema de Equipamiento
+
+El jugador podrá equipar distintos objetos.
+
+Ejemplo:
+
+- Balones
+- Tenis
+- Jerseys
+- Mochilas
+- Muñequeras
+- Cintas
+- Gorras
+- Hoodies
+
+Todos serán cosméticos.
+
+No modificarán las estadísticas deportivas.
+
+---
+
+# Sistema de Skins
+
+Se implementarán skins completas.
+
+Ejemplos:
+
+- Rookie
+- Street Player
+- Pro Player
+- NBA Legend
+- Retro 8 Bits
+- Cyber Player
+- Neon Edition
+- Halloween
+- Navidad
+- Samurai
+- Ninja
+- Futurista
+
+---
+
+# Inventario
+
+Cada usuario tendrá un inventario personal.
+
+```
+Inventario
+
+Playeras
+
+Tenis
+
+Balones
+
+Accesorios
+
+Emotes
+
+Fondos
+
+Mascotas
+
+Insignias
+```
+
+Todo el contenido desbloqueado permanecerá para siempre.
+
+---
+
+# Sistema de Monedas
+
+Existirán dos monedas.
+
+## Coins
+
+Se obtienen jugando y entrenando.
+
+## Gems
+
+Se obtienen mediante eventos especiales o desafíos difíciles.
+
+---
+
+# Sistema de Experiencia
+
+Cada entrenamiento otorgará experiencia.
+
+Ejemplo:
+
+Entrenamiento corto
+
+50 XP
+
+Entrenamiento completo
+
+150 XP
+
+Excelente rendimiento
+
+300 XP
+
+Nuevo récord
+
+500 XP
+
+---
+
+# Sistema de Niveles
+
+Ejemplo inicial.
+
+```
+Nivel 1
+
+0 XP
+
+Nivel 2
+
+300 XP
+
+Nivel 3
+
+700 XP
+
+Nivel 4
+
+1200 XP
+
+Nivel 5
+
+1800 XP
+```
+
+Cada nivel desbloqueará contenido nuevo.
+
+---
+
+# Atributos RPG
+
+El personaje tendrá atributos permanentes.
+
+- Shot Accuracy
+- Ball Control
+- Passing
+- Speed
+- Defense
+- Vertical Jump
+- Basketball IQ
+- Endurance
+- Consistency
+- Reaction Time
+
+Estos atributos estarán directamente relacionados con el rendimiento real detectado por la IA.
+
+---
+
+# Relación entre IA y RPG
+
+Ejemplo.
+
+Si el sistema detecta que el usuario mejora:
+
+Precisión de tiro
+
+↓
+
+Shot Accuracy +2
+
+Si aumenta la velocidad.
+
+↓
+
+Speed +1
+
+Si mejora el control del balón.
+
+↓
+
+Ball Control +3
+
+Toda la progresión será automática.
+
+---
+
+# Sistema de Misiones
+
+Ejemplos.
+
+- Entrena 3 días seguidos.
+- Anota 50 tiros.
+- Completa 500 pases.
+- Corre 5 kilómetros.
+- Logra un 80% de precisión.
+- Haz 100 tiros libres.
+- Completa un entrenamiento perfecto.
+
+Cada misión otorgará experiencia y recompensas.
+
+---
+
+# Sistema de Logros
+
+Ejemplos.
+
+- Primer entrenamiento
+- 100 tiros realizados
+- 1000 tiros realizados
+- Primera asistencia
+- Primer bloqueo
+- Primer triple
+- 10 horas entrenando
+- Nivel 50
+- Nivel 100
+
+---
+
+# Sistema de Títulos
+
+Los títulos aparecerán junto al nombre del jugador.
+
+Ejemplos.
+
+- Rookie
+- Shooter
+- Sniper
+- Defender
+- Playmaker
+- MVP
+- Legend
+- Hall of Fame
+
+---
+
+# Sistema de Emotes
+
+Los personajes podrán utilizar emotes.
+
+Ejemplos.
+
+- Saludo
+- Aplauso
+- Corazón
+- Pulgar arriba
+- Baile
+- Enojo
+- Celebración
+- Risa
+
+---
+
+# Sistema de Mascotas
+
+El jugador podrá desbloquear mascotas Pixel Art.
+
+Ejemplos.
+
+- Perro
+- Gato
+- Robot
+- Dragón
+- Zorro
+- Águila
+- Balón Viviente
+
+Las mascotas serán únicamente visuales.
+
+---
+
+# Fondos del Perfil
+
+El perfil podrá personalizarse.
+
+Fondos disponibles.
+
+- Cancha Urbana
+- Arena Profesional
+- Gimnasio
+- Ciudad Nocturna
+- Cyber City
+- Espacio
+- Montañas
+- Retro
+
+---
+
+# Perfil del Jugador
+
+Cada usuario tendrá un perfil completo.
+
+```
+Nombre
+
+Nivel
+
+Experiencia
+
+Avatar
+
+Horas Jugadas
+
+Entrenamientos
+
+Tiros
+
+Porcentaje
+
+Racha
+
+Ranking
+
+Logros
+
+Insignias
+
+Inventario
+```
+
+---
+
+# Guardado
+
+Toda la información del RPG será independiente del sistema de IA.
+
+Archivos previstos.
+
+```
+player_profile.json
+
+inventory.json
+
+missions.json
+
+achievements.json
+
+statistics.json
+
+settings.json
+```
+
+En futuras versiones estos datos podrán migrarse a una base de datos sin modificar el resto del sistema.
+
+---
+
+# Principios del Sistema RPG
+
+Durante todo el desarrollo deberán cumplirse las siguientes reglas:
+
+- Todo el contenido cosmético será independiente del rendimiento deportivo.
+- Ningún objeto de pago otorgará ventajas competitivas.
+- El progreso deportivo dependerá únicamente del entrenamiento real del usuario.
+- Todas las recompensas deberán incentivar la constancia y la mejora personal.
+- El sistema deberá ser escalable para agregar nuevos objetos, skins, eventos y misiones sin modificar la arquitectura existente.
+
+---
+
+# Visión a Largo Plazo
+
+El sistema RPG busca que el usuario no solo entrene, sino que también disfrute ver cómo su personaje evoluciona con cada sesión.
+
+La combinación entre inteligencia artificial, estadísticas deportivas y progresión estilo RPG convertirá a VJC Hoops AI en una plataforma única donde el rendimiento real se refleje directamente en un videojuego.
+
+El objetivo final es crear una experiencia que motive a los jugadores a regresar todos los días para entrenar, mejorar y construir la mejor versión de su avatar.
