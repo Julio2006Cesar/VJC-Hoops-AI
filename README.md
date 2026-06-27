@@ -94,6 +94,17 @@ pip install -e .
 .\.venv\Scripts\python.exe -m unittest discover -s tests
 ```
 
+## Ejecutar Visualizacion De Video
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+pip install -e .
+python main.py
+```
+
+La aplicacion abre `CameraService(camera_index=0)`, conecta la fuente con `FrameManager`, detecta personas, mantiene IDs de seguimiento, muestra FPS sobre la imagen y se cierra al presionar `q`.
+
 ## Principios de desarrollo
 
 - Mantener el dominio independiente de OpenCV, YOLO, MediaPipe, FastAPI y PostgreSQL.
@@ -117,6 +128,10 @@ pip install -e .
 ## Modulos iniciales
 
 - Frame Manager: coordinacion de lectura de frames desde fuentes de video sin acoplar el nucleo a OpenCV. Ver `docs/frame-manager.md`.
+- Camera Service: adaptador de infraestructura para camaras locales mediante OpenCV. Ver `docs/camera-service.md`.
+- Video Visualization: aplicacion minima para comprobar camara, frame manager y FPS en ventana OpenCV. Ver `docs/video-visualization.md`.
+- Person Detector: adaptador YOLO para detectar unicamente personas en tiempo real. Ver `docs/person-detector.md`.
+- Object Tracker: motor simple de seguimiento por IoU para mantener IDs entre frames. Ver `docs/object-tracker.md`.
 
 ## Convenciones
 
