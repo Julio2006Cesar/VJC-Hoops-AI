@@ -598,3 +598,563 @@ Before implementing a feature:
 # End of Part 1
 
 The following sections (Parts 2, 3 and 4) expand the AI pipeline, RPG system, game design, customization, database, APIs, deployment strategy and long-term roadmap.
+
+# 📘 Parte 2: Sistema de IA y Pipeline Completo
+
+# Objetivo General del Sistema de IA
+
+El objetivo principal de VJC Hoops AI es analizar automáticamente el rendimiento de un jugador de baloncesto utilizando Visión por Computadora e Inteligencia Artificial.
+
+El sistema debe ser capaz de transformar un simple video grabado desde una cámara convencional en información deportiva útil, precisa y visualmente atractiva.
+
+No se trata únicamente de detectar objetos.
+
+El objetivo final es construir un entrenador virtual capaz de comprender lo que ocurre dentro de la cancha.
+
+---
+
+# Filosofía del Pipeline
+
+Todo el proyecto sigue una filosofía muy sencilla:
+
+**Cada módulo hace solamente una tarea.**
+
+Nunca se mezclan responsabilidades.
+
+Esto permite:
+
+* reemplazar modelos de IA sin modificar el resto del sistema;
+* realizar pruebas unitarias;
+* mejorar precisión módulo por módulo;
+* facilitar mantenimiento;
+* permitir futuras expansiones.
+
+La información siempre fluye hacia adelante.
+
+Nunca hacia atrás.
+
+---
+
+# Flujo General
+
+Video
+
+↓
+
+Frame Manager
+
+↓
+
+Camera Service
+
+↓
+
+Person Detector
+
+↓
+
+Object Tracker
+
+↓
+
+Ball Detector
+
+↓
+
+Ball Tracker
+
+↓
+
+Court Detector
+
+↓
+
+Hoop Detector
+
+↓
+
+Pose Estimation
+
+↓
+
+Action Recognition
+
+↓
+
+Shot Detection
+
+↓
+
+Shot Meter
+
+↓
+
+Statistics Engine
+
+↓
+
+Heatmaps
+
+↓
+
+Minimap
+
+↓
+
+Replay Generator
+
+↓
+
+Gamification Engine
+
+↓
+
+Dashboard
+
+---
+
+# Etapa 1 — Captura de Video
+
+Responsabilidad:
+
+Obtener imágenes desde cualquier fuente.
+
+Fuentes soportadas:
+
+* Webcam USB
+* Cámara IP
+* Archivo MP4
+* Video 4K
+* Video 60 FPS
+* Cámara profesional
+* RTSP
+* Streaming futuro
+
+Salida:
+
+Objeto Frame
+
+El resto del sistema nunca conoce OpenCV.
+
+---
+
+# Etapa 2 — Frame Manager
+
+Responsabilidad:
+
+Administrar cada frame del sistema.
+
+Funciones:
+
+* timestamp
+* índice
+* resolución
+* imagen
+* sincronización
+
+No realiza IA.
+
+Simplemente administra información.
+
+---
+
+# Etapa 3 — Person Detector
+
+Modelo:
+
+YOLOv8
+
+Objetivo:
+
+Encontrar todas las personas visibles.
+
+Salida:
+
+Bounding Box
+
+Confianza
+
+Clase
+
+Ejemplo:
+
+Persona 1
+
+x = 520
+
+y = 180
+
+w = 115
+
+h = 290
+
+confidence = 0.96
+
+---
+
+# Etapa 4 — Object Tracker
+
+Objetivo:
+
+Mantener un ID único para cada persona.
+
+Ejemplo:
+
+Frame 1
+
+Jugador A → ID 1
+
+Jugador B → ID 2
+
+Frame 2
+
+Jugador A → ID 1
+
+Jugador B → ID 2
+
+Aunque se muevan, el sistema conserva la identidad.
+
+Esto permite calcular estadísticas durante toda la sesión.
+
+---
+
+# Etapa 5 — Ball Detector
+
+Uno de los módulos más importantes.
+
+Detecta exclusivamente el balón.
+
+Modelo:
+
+YOLO entrenado específicamente para balones de baloncesto.
+
+Información:
+
+Centro
+
+Radio
+
+Bounding Box
+
+Confianza
+
+Velocidad inicial
+
+---
+
+# Etapa 6 — Ball Tracker
+
+No basta con detectar.
+
+El sistema debe seguir el balón incluso cuando:
+
+* pasa detrás de un jugador;
+* hay desenfoque;
+* cambia de velocidad;
+* sale parcialmente del cuadro.
+
+El tracker mantiene una trayectoria continua.
+
+---
+
+# Etapa 7 — Court Detection
+
+Objetivo:
+
+Comprender la cancha.
+
+Detectar:
+
+* líneas
+* zonas
+* pintura
+* línea de tres
+* centro
+* límites
+
+Esto permite convertir coordenadas de imagen en coordenadas reales.
+
+---
+
+# Etapa 8 — Hoop Detection
+
+Detectar automáticamente:
+
+* aro
+* tablero
+* poste
+
+Con esto será posible determinar:
+
+* intentos de tiro;
+* tiros convertidos;
+* trayectoria correcta;
+* ángulo de entrada.
+
+---
+
+# Etapa 9 — Pose Estimation
+
+Modelo previsto:
+
+MediaPipe Pose
+
+o
+
+YOLO Pose
+
+Se analizarán aproximadamente 33 puntos del cuerpo.
+
+Entre ellos:
+
+Cabeza
+
+Hombros
+
+Codos
+
+Muñecas
+
+Cadera
+
+Rodillas
+
+Tobillos
+
+---
+
+# Etapa 10 — Reconocimiento del Movimiento
+
+El sistema combinará:
+
+Pose
+
+*
+
+Trayectoria
+
+*
+
+Tracking
+
+Para identificar automáticamente acciones como:
+
+Drible
+
+Pase
+
+Recepción
+
+Tiro
+
+Salto
+
+Bloqueo
+
+Defensa
+
+Sprint
+
+Cambio de dirección
+
+---
+
+# Etapa 11 — Shot Detection
+
+El sistema determinará automáticamente cuándo un lanzamiento comienza.
+
+Para ello utilizará reglas como:
+
+Balón sale de la mano.
+
+Brazo completamente extendido.
+
+Movimiento ascendente.
+
+Distancia respecto al aro.
+
+Velocidad inicial.
+
+---
+
+# Etapa 12 — Shot Meter
+
+Uno de los módulos más innovadores.
+
+Analizará:
+
+Ángulo del brazo.
+
+Velocidad.
+
+Tiempo.
+
+Trayectoria.
+
+Punto de liberación.
+
+Altura.
+
+Generará una puntuación visual similar a videojuegos deportivos.
+
+Ejemplo:
+
+Perfect Shot
+
+Excellent
+
+Good
+
+Late
+
+Early
+
+Very Early
+
+Very Late
+
+---
+
+# Etapa 13 — Statistics Engine
+
+Toda la información anterior llegará aquí.
+
+Se calcularán estadísticas como:
+
+Tiros intentados
+
+Tiros anotados
+
+Porcentaje
+
+Distancia promedio
+
+Velocidad promedio
+
+Tiempo de reacción
+
+Saltos
+
+Aceleración
+
+Tiempo de posesión
+
+Dribles
+
+Pases
+
+Recuperaciones
+
+Bloqueos
+
+---
+
+# Etapa 14 — Heatmaps
+
+Se almacenarán todas las posiciones del jugador.
+
+Con ello se generarán mapas de calor mostrando:
+
+Dónde juega más.
+
+Dónde lanza.
+
+Dónde recibe.
+
+Dónde falla.
+
+---
+
+# Etapa 15 — Minimap
+
+Se construirá una representación 2D completa.
+
+Todos los jugadores aparecerán en tiempo real.
+
+Será similar a los minimapas utilizados por NBA 2K.
+
+---
+
+# Etapa 16 — Replay Generator
+
+Cada jugada importante será almacenada.
+
+Ejemplos:
+
+Triple.
+
+Bloqueo.
+
+Asistencia.
+
+Mate.
+
+Robo.
+
+El usuario podrá revisarlas posteriormente.
+
+---
+
+# Etapa 17 — Gamification Engine
+
+Toda la información deportiva será enviada al videojuego.
+
+Ejemplos:
+
+XP.
+
+Nivel.
+
+Monedas.
+
+Misiones.
+
+Logros.
+
+Desafíos diarios.
+
+Ranking.
+
+Eventos.
+
+El videojuego nunca calculará estadísticas.
+
+Solo consumirá la información producida por el sistema de IA.
+
+---
+
+# Principios Fundamentales
+
+Durante todo el desarrollo deberán cumplirse las siguientes reglas:
+
+* Ningún módulo conoce detalles internos de otro.
+* OpenCV permanece únicamente en infraestructura.
+* YOLO permanece únicamente en infraestructura.
+* El dominio nunca depende de librerías externas.
+* Todo módulo debe ser reemplazable.
+* Cada componente debe contar con pruebas unitarias.
+* La arquitectura siempre seguirá los principios de Clean Architecture.
+
+---
+
+# Estado Actual del Pipeline
+
+Actualmente el proyecto cuenta con los siguientes módulos implementados:
+
+✔ Captura de video.
+
+✔ Frame Manager.
+
+✔ Camera Service.
+
+✔ Detección de personas mediante YOLO.
+
+✔ Tracking por IDs.
+
+✔ Visualización con OpenCV.
+
+✔ Arquitectura desacoplada.
+
+✔ Pruebas unitarias e integración.
+
+Los siguientes módulos (detección de balón, aro, cancha, pose, estadísticas y videojuego) forman parte de la siguiente etapa del desarrollo.
